@@ -8,7 +8,6 @@ import BillPayments from './BillPayments';
 import ScheduledPayments from './ScheduledPayments';
 import ChequeDeposit from './ChequeDeposit';
 import CryptoWallet from './CryptoWallet';
-import ChatBot from './ChatBot';
 import axios from 'axios';
 import config from '../config';
 import { Line } from 'react-chartjs-2';
@@ -1043,7 +1042,6 @@ export default function Dashboard({ user, onLogout }) {
             </div>
           )}
         </div>
-        <ChatBot isDarkMode={isDarkMode} />
       </main>
     </div>
   );
