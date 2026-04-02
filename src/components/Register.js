@@ -146,7 +146,7 @@ export default function Register() {
   return (
     <div className="register-container">
       <div className="register-header">
-        <h1>🏦 Skylark Bank</h1>
+        <h1>🏦 DEMO Bank</h1>
         <h2>Create Your Account</h2>
         <p>Join thousands of satisfied customers worldwide</p>
       </div>

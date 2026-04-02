@@ -125,7 +125,7 @@ export default function Login({ onLogin }) {
   return (
     <div className="login-container">
       <div className="login-header">
-        <h1>🏦 Skylark Bank</h1>
+        <h1>🏦 Demo Bank</h1>
         <h2>Sign In to Your Account</h2>
         <p>Secure access to your financial dashboard</p>
       </div>
@@ -211,14 +211,14 @@ export default function Login({ onLogin }) {
                 <span className="modal-info-icon">📧</span>
                 <div>
                   <div className="modal-info-label">Email Support</div>
-                  <div className="modal-info-value">support@skylarkcb.com</div>
+                  <div className="modal-info-value">support@demobank.com</div>
                 </div>
               </div>
               <div className="modal-info-card">
                 <span className="modal-info-icon">📞</span>
                 <div>
                   <div className="modal-info-label">Phone Support</div>
-                  <div className="modal-info-value">1-708-667-6099</div>
+                  <div className="modal-info-value">1-708-DEMOBANK</div>
                 </div>
               </div>
               <div className="modal-info-card">
