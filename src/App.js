@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
@@ -57,7 +57,7 @@ class ErrorBoundary extends React.Component {
 function HomePage({ user, onNavigate }) {
   useEffect(() => {
     if (user) {
-      onNavigate('/app/dashboard');
+      onNavigate('/dashboard');
     }
   }, [user, onNavigate]);
 
@@ -89,13 +89,13 @@ function HomePage({ user, onNavigate }) {
 
       <div className="home-actions">
         <button 
-          onClick={() => onNavigate('/app/login')}
+          onClick={() => onNavigate('/login')}
           className="btn btn-primary"
         >
           Sign In to Your Account
         </button>
         <button 
-          onClick={() => onNavigate('/app/register')}
+          onClick={() => onNavigate('/register')}
           className="btn btn-secondary"
         >
           Open New Account
@@ -164,12 +164,7 @@ function App() {
     setUser(null);
     localStorage.removeItem('user');
     localStorage.removeItem('darkMode');
-    // ← FIXED: redirect to /app/ not /
-    window.location.href = '/index.html';
-  };
-
-  const handleNavigate = (path) => {
-    window.location.href = path;
+    window.location.href = '/';
   };
 
   if (initializing || loading) {
@@ -178,14 +173,12 @@ function App() {
 
   return (
     <ErrorBoundary>
-      {/* ← ONLY CHANGE: added basename="/app" */}
-      <Router basename="/app">
+      <Router>
         <div className="App">
           <AppContent 
             user={user}
             onLogin={handleLogin}
             onLogout={handleLogout}
-            onNavigate={handleNavigate}
           />
         </div>
       </Router>
@@ -194,8 +187,13 @@ function App() {
 }
 
 // App Content Component
-function AppContent({ user, onLogin, onLogout, onNavigate }) {
+function AppContent({ user, onLogin, onLogout }) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavigate = (path) => {
+    navigate(path);
+  };
 
   useEffect(() => {
     const page = location.pathname.split('/')[1] || 'home';
@@ -205,7 +203,7 @@ function AppContent({ user, onLogin, onLogout, onNavigate }) {
       '': 'Skylark Bank - Your Trusted Financial Partner',
       'login': 'Sign In - Skylark Bank',
       'register': 'Create Account - Skylark Bank',
-      'dashboard': 'Dashboard - Skyskylark Bank'
+      'dashboard': 'Dashboard - Skylark Bank'
     };
     
     document.title = titles[page] || 'Skylark Bank';
@@ -240,7 +238,7 @@ function AppContent({ user, onLogin, onLogout, onNavigate }) {
         path="/" 
         element={
           <PublicRoute user={user}>
-            <HomePage user={user} onNavigate={onNavigate} />
+            <HomePage user={user} onNavigate={handleNavigate} />
           </PublicRoute>
         } 
       />
@@ -278,7 +276,7 @@ function AppContent({ user, onLogin, onLogout, onNavigate }) {
       {/* 404 Page */}
       <Route 
         path="*" 
-        element={<NotFoundPage onNavigate={onNavigate} />} 
+        element={<NotFoundPage onNavigate={handleNavigate} />} 
       />
     </Routes>
   );
@@ -295,13 +293,13 @@ function NotFoundPage({ onNavigate }) {
         <p>The page you're looking for doesn't exist or has been moved.</p>
         <div className="not-found-actions">
           <button 
-            onClick={() => onNavigate('/app/')}
+            onClick={() => onNavigate('/')}
             className="btn btn-primary"
           >
             Go to Home
           </button>
           <button 
-            onClick={() => onNavigate('/app/login')}
+            onClick={() => onNavigate('/login')}
             className="btn btn-secondary"
           >
             Sign In
